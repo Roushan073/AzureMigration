@@ -60,16 +60,27 @@ You will need to install the following locally:
 
 ## Monthly Cost Analysis
 Complete a month cost analysis of each Azure resource to give an estimate total cost using the table below:
-As per Azure Resource Pricing -
+As per [Azure Resource Pricing Calculator](https://azure.microsoft.com/en-in/pricing/calculator/) -
 
-| Azure Resource | Service Tier | Monthly Cost (USD/Month) |
+| Azure Resource | Service Tier | Monthly Cost (USD) |
 | ------------ | ------------ | ------------ |
-| *Azure Postgres Database* |  Basic   |       28       |
+| *Azure Postgres Database* |  Compute = 27.86 x vCores (1), Storage = 0.11 x Storage Units (5)   |       ~28       |
 | *Azure Service Bus*   |     Basic    |        0.05 per million operations      |
-| *Azure Function (3M executions)*                   |   -      |      18        |
+| *Azure Function*                   |   3M executions and 1.5 million GB/s (first 400,000 GB/s of execution and 1,000,000 executions are free)      |      18        |
 | *App Service*      | Free Tier | 0  |
-| *Azure Storage* | - | ~0.06 |
+| *App Service*| Standard | 73|
+| *Azure Storage* | 100 TB Storage + 1M writes + 1M list + 1M read | ~2049 |
 
 ## Architecture Explanation
-I have used App Service with Linux OS to deploy both Flask Web App and Azure Functions. App Service is used because in this project we need not focus on application deployment and management and it also provides free tier. Aslo separate app service plan is used to scale up/down based on trafic.
+#### Azure Function
+* Azure Functions allows to run small pieces of code (called "functions") without worrying about application infrastructure (serverless) and thus makes the app development process more productive.
+* Pay only for the time spent running your code.
+* It is mostly suitable for running background jobs or respond to events like sending notification on user registration etc. This helps to avoid blocking the code execution and hence timeouts in the web app.
 
+####  Azure Web App 
+One of the major concerns of the on-premise solutions is they need dedicated on-site servers, which are still costly and often require more than a one-time purchase. Keeping your data accessible and secure requires hardware that is not only up to date to handle all relevant requests but also compatible with other server systems and updated software systems. So there is a recurring cost every time you need to update your hardware. They also requires a dedicated tech team to support all of the updates needed to keep these servers functional.
+On the other hand cloud services are cheaper than on-premise solutions. With Azure, you don’t have to invest in new machines, infrastructure, or replace aging servers. You also don’t need to make space for infrastructure and servers. Azure, offers flexible expenditure, which means:
+- You pay according to your needs.
+- You pay more to get more.
+- You save on energy, space, and cooling costs.
+Not only that, you have certainty in your recurring costs as Microsoft charge per user for their Azure cloud services.
